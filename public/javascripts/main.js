@@ -1,20 +1,4 @@
-var data = [
-  {
-    name: 'Manu',
-    age: 25,
-    gender: 'M',
-    location: 'MPLS',
-    twitter:'@manu'
-  },
-  {
-    name: 'Manu',
-    age: 25,
-    gender: 'M',
-    location: 'MPLS',
-    twitter:'@manu'
-  }
-
-];
+var data;
 
 function renderTable() {
 
@@ -40,9 +24,12 @@ function makeRow(user, index){
   $tr.append('<td>' + user.twitter + '</td>');
   var $button = $('<button>Delete</button>');
   $button.click(function() {
-    //$.ajax();
     data.splice(index, 1);
     renderTable();
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/users/' + user.userID
+    });
   });
   $tr.append($('<td>').html($button));
   return $tr;
@@ -52,7 +39,6 @@ function makeRow(user, index){
 
 function makeHeader(){
   var $tr = $('<tr>');
-  var $th = $('<th>');
   $tr.append('<th> name </th>');
   $tr.append('<th> age </th>');
   $tr.append('<th> gender </th>');
@@ -63,8 +49,13 @@ function makeHeader(){
 
 $(document).ready(function(){
   $('button').click(function(){
-    //$.ajax to get data from
-    renderTable();
+    $.ajax({
+      method: 'GET',
+      url: '/api/users'
+    }).done(function(responseData) {
+      data = responseData;
+      renderTable();
+    });
   });
 
 });

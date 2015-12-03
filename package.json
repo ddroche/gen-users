@@ -16,6 +16,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "chance": "0.8.0"
+    "chance": "0.8.0",
+    "mongodb": "2.0.49"
   }
 }
